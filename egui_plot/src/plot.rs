@@ -137,7 +137,7 @@ pub struct Plot<'a> {
 
 impl<'a> Plot<'a> {
     /// Give a unique id for each plot within the same [`Ui`].
-    pub fn new(id_source: impl std::hash::Hash) -> Self {
+    pub fn new(id_source: impl std::hash::Hash + std::fmt::Debug) -> Self {
         Self {
             id_source: Id::new(id_source),
             id: None,
@@ -634,9 +634,10 @@ impl<'a> Plot<'a> {
 
     /// Set the base color for grid lines.
     ///
-    /// By default, grid lines derive their color from [`egui::Visuals::text_color`].
-    /// This override lets you control the grid color independently of text styling.
-    /// The color is still modulated by line strength (fading for denser grid lines).
+    /// By default, grid lines derive their color from
+    /// [`egui::Visuals::text_color`]. This override lets you control the
+    /// grid color independently of text styling. The color is still
+    /// modulated by line strength (fading for denser grid lines).
     #[inline]
     pub fn grid_color(mut self, color: Color32) -> Self {
         self.grid_color = Some(color);
@@ -2166,12 +2167,14 @@ impl<'a> PlotUi<'a> {
 
 #[cfg(all(test, not(target_arch = "wasm32")))]
 mod plot_tests {
-    use super::*;
-    use crate::{Plot, Points};
-
     use egui_kittest::Harness;
 
-    /// Test that `auto_bounds(true)` fits the data exactly when the margin fraction is zero.
+    use super::*;
+    use crate::Plot;
+    use crate::Points;
+
+    /// Test that `auto_bounds(true)` fits the data exactly when the margin
+    /// fraction is zero.
     #[test]
     fn auto_bounds_true() {
         crate::utils::init_test_logger();

@@ -4,3 +4,9 @@
 # we don't use `[build]` because of rust analyzer's build cache invalidation https://github.com/emilk/eframe_template/issues/93
 [target.wasm32-unknown-unknown]
 rustflags = ["--cfg=web_sys_unstable_apis"]
+
+[patch."https://github.com/ambrosia13/egui"]
+egui = { path = "../egui/crates/egui" }
+eframe = { path = "../egui/crates/eframe" }
+emath = { path = "../egui/crates/emath" }
+egui_kittest = { path = "../egui/crates/egui_kittest" }
